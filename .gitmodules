@@ -1,0 +1,3 @@
+[submodule "libs/SCOPE"]
+	path = libs/SCOPE
+	url = https://github.com/alexislaurent1321-gif/SCOPE.git
