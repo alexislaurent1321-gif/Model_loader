@@ -1,43 +1,10 @@
-#include <iostream>
-#include <vector>
-#include <filesystem>
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-
-#include "SCOPE/VBO.h"
-#include "SCOPE/VAO.h"
-#include "SCOPE/texture.h"
-#include "SCOPE/shader.h"
-#include "SCOPE/context.h"
-#include "SCOPE/light.h"
-#include "SCOPE/model.h"
-
-#include "SCOPE/UICamera.h"
-#include "SCOPE/UILight.h"
-#include "SCOPE/UIModel.h"
-
+#include "SCOPE/SCOPE.h"
 
 // Frame
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 int main(){
-    
-    // Initialisation de GLFW
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
     // Context creation
     Context context;
     context.init();
@@ -63,12 +30,10 @@ int main(){
     ImGui_ImplOpenGL3_Init("#version 330");
 
     // Shaders loading
-    Shader shader1("libs/SCOPE/resources/shaders/default_lights.vert", "libs/SCOPE/resources/shaders/default_lights.frag");
-    // Shader cubeLightShader("resources/shaders/light_cube.vert", "resources/shaders/light_cube.frag");
+    Shader model_shader("libs/SCOPE/resources/shaders/default_lights.vert", "libs/SCOPE/resources/shaders/default_lights.frag");
 
     // Models loading
     Model model1("models/backpack2/scene.gltf");
-    // Model model1("resources/models/backpack/backpack.obj");
 
 
     // -----------------------------
@@ -93,24 +58,24 @@ int main(){
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        shader1.use();
-        shader1.setUniform("viewPos", camera.Position);
+        model_shader.use();
+        model_shader.setUniform("viewPos", camera.Position);
         float shininess = 1.;
-        shader1.setUniform("material.shininess", shininess);
+        model_shader.setUniform("material.shininess", shininess);
 
 
         int pointIndex = 0, dirIndex = 0, spotIndex = 0;
 
         for (auto &entry : uiLight.lights) {
             if (entry.type == UILight::LightType::Point){
-                static_cast<PointLight*>(entry.light.get())->apply(shader1, pointIndex++);
+                static_cast<PointLight*>(entry.light.get())->apply(model_shader, pointIndex++);
                 const int nbPointLights = pointIndex;
-                shader1.setUniform("nbPointLights", nbPointLights);
+                model_shader.setUniform("nbPointLights", nbPointLights);
             }
             else if (entry.type == UILight::LightType::Directional){
-                static_cast<DirLight*>(entry.light.get())->apply(shader1, dirIndex++);
+                static_cast<DirLight*>(entry.light.get())->apply(model_shader, dirIndex++);
                 const int nbDirLights = dirIndex;
-                shader1.setUniform("nbDirLights", nbDirLights);
+                model_shader.setUniform("nbDirLights", nbDirLights);
             }
         }
 
@@ -119,10 +84,10 @@ int main(){
         glm::mat4 view = camera.getViewMatrix();
         glm::mat4 model = model1.getModelMatrix();
 
-        shader1.setUniform("projection", projection);
-        shader1.setUniform("view", view);
-        shader1.setUniform("model", model);
-        model1.draw(shader1);
+        model_shader.setUniform("projection", projection);
+        model_shader.setUniform("view", view);
+        model_shader.setUniform("model", model);
+        model1.draw(model_shader);
 
         // UI update
         ImGui_ImplOpenGL3_NewFrame();
