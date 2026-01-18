@@ -15,13 +15,13 @@ int main(){
     Shader model_shader("libs/SCOPE/resources/shaders/default_lights.vert", "libs/SCOPE/resources/shaders/default_lights.frag");
 
     // Models loading
-    Model model1("models/backpack2/scene.gltf");
+    Model model("models/backpack2/scene.gltf");
 
-    scene.setModel(model1);
+    scene.setModel(model);
     scene.setCamera(camera);
 
 
-    UICameraController uiCam(&context.cameraController);
+    UICameraController uiCam;
     UIModel uiModel;
     UILight uiLight;
 
@@ -40,14 +40,14 @@ int main(){
         // Call to the input manager
         context.processInput(context.window, deltaTime);
 
-        scene.render(model_shader);
+        scene.render(context, model_shader);
 
         // UI update
         SCOPE::UI_update();
 
-        uiCam.draw();
-        uiLight.draw(&scene);
-        uiModel.draw(&scene);
+        uiCam.draw(context);
+        uiLight.draw(scene);
+        uiModel.draw(scene);
 
         SCOPE::UI_render();
 
