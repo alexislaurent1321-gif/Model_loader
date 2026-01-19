@@ -1,45 +1,35 @@
 #include "SCOPE/SCOPE.h"
 
 int main(){
-    Scene scene;
-    // Context creation
-    Context context;
-    context.init();
-    Camera& camera = context.cameraController.camera;
 
+    SCOPE::Scene scene;
+
+    // Context creation
+    SCOPE::Context context;
+    context.init();
 
     SCOPE::openGL_init();
     SCOPE::UI_init(context);    // initialization of IMGUI
 
     // Shaders loading
-    Shader model_shader("libs/SCOPE/resources/shaders/default_lights.vert", "libs/SCOPE/resources/shaders/default_lights.frag");
+    SCOPE::Shader model_shader("libs/SCOPE/resources/shaders/default_lights.vert", "libs/SCOPE/resources/shaders/default_lights.frag");
 
-    // Models loading
-    Model model("models/backpack2/scene.gltf");
-
+    // Model loading
+    SCOPE::Model model("models/backpack2/scene.gltf");
     scene.setModel(model);
-    scene.setCamera(camera);
 
+    // Camera
+    scene.setCamera(SCOPE::Camera());
 
-    UICameraController uiCam;
-    UIModel uiModel;
-    UILight uiLight;
-
-    // Frame
-    float deltaTime = 0.0f;
-    float lastFrame = 0.0f;
+    // User interfaces
+    SCOPE::UICameraController uiCam;
+    SCOPE::UIModel uiModel;
+    SCOPE::UILight uiLight;
 
     // Render loop
-    while (!glfwWindowShouldClose(context.window))
-    {
-        // Updating frames
-        float currentFrame = static_cast<float>(glfwGetTime());
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+    while (!glfwWindowShouldClose(context.window)){
 
-        // Call to the input manager
-        context.processInput(context.window, deltaTime);
-
+        scene.update(context);
         scene.render(context, model_shader);
 
         // UI update
@@ -49,16 +39,12 @@ int main(){
         uiLight.draw(scene);
         uiModel.draw(scene);
 
-        SCOPE::UI_render();
-
-        glfwSwapBuffers(context.window);
-        glfwPollEvents();
+        SCOPE::UI_render();   
     }
 
-    // End of IMGUI
     SCOPE::UI_shutDown();
-
-    glfwTerminate();
+    
+    SCOPE::shutDown();
 
     return 0;
 }
