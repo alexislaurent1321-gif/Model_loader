@@ -13,7 +13,7 @@ int main(){
     // OpenGL initialization (always after creating the OpenGL context)
     SCOPE::init();
 
-    SCOPE::Shader shader("libs/SCOPE/resources/shaders/default.vert", "libs/SCOPE/resources/shaders/default.frag");   // shader for the model
+    SCOPE::Shader shader("libs/SCOPE/resources/shaders/default.vert", "libs/SCOPE/resources/shaders/default.frag");   // default shader for the model
     SCOPE::Model model("models/survival_guitar_backpack/scene.gltf");   // loading a model
     
     // Setting up the scene
