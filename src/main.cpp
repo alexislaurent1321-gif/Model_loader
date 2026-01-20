@@ -15,6 +15,7 @@ int main(){
 
     SCOPE::Shader shader("libs/SCOPE/resources/shaders/default.vert", "libs/SCOPE/resources/shaders/default.frag");   // default shader for the model
     SCOPE::Model model("models/survival_guitar_backpack/scene.gltf");   // loading a model
+    model.setScale(glm::vec3(0.01f));   // scaling the model
     
     // Setting up the scene
     scene.setModel(model);
