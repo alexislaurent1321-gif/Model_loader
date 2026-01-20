@@ -1,50 +1,35 @@
 #include "SCOPE/SCOPE.h"
+#include "SCOPE/UIs/UIManager.h"
 
 int main(){
 
     SCOPE::Scene scene;
-
-    // Context creation
     SCOPE::Context context;
-    context.init();
+    SCOPE::UIManager UI;
+    
+    context.init();     // initialization of the context
+    UI.init(context);    // initialization of IMGUI
+   
+    // OpenGL initialization (always after creating the OpenGL context)
+    SCOPE::init();
 
-    SCOPE::openGL_init();
-    SCOPE::UI_init(context);    // initialization of IMGUI
-
-    // Shaders loading
-    SCOPE::Shader model_shader("libs/SCOPE/resources/shaders/default.vert", "libs/SCOPE/resources/shaders/default.frag");
-
-    // Model loading
-    SCOPE::Model model("models/backpack2/scene.gltf");
+    SCOPE::Shader shader("libs/SCOPE/resources/shaders/default.vert", "libs/SCOPE/resources/shaders/default.frag");   // shader for the model
+    SCOPE::Model model("models/survival_guitar_backpack/scene.gltf");   // loading a model
+    
+    // Setting up the scene
     scene.setModel(model);
-
-    // Camera
     scene.setCamera(SCOPE::Camera());
-
-    // User interfaces
-    SCOPE::UICameraController uiCam;
-    SCOPE::UIModel uiModel;
-    SCOPE::UILight uiLight;
 
     // Render loop
     while (!glfwWindowShouldClose(context.window)){
 
         scene.update(context);
-        scene.render(context, model_shader);
-
-        // UI update
-        SCOPE::UI_update();
-
-        uiCam.draw(context);
-        uiLight.draw(scene);
-        uiModel.draw(scene);
-
-        SCOPE::UI_render();   
+        scene.render(context, shader);
+        UI.draw(scene, context);  // Draw the UIs
     }
 
-    SCOPE::UI_shutDown();
-    
-    SCOPE::shutDown();
+    UI.shutDown();  // Shutdown IMGUI
+    SCOPE::shutDown();  // Shutdown GLFW
 
     return 0;
 }
