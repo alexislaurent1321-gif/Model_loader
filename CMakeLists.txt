@@ -14,7 +14,7 @@ find_package(assimp CONFIG REQUIRED)
 # Ajoutez le submodule SCOPE
 add_subdirectory(libs/SCOPE)
 
-file(GLOB_RECURSE SOURCES main.cpp)
+file(GLOB_RECURSE SOURCES src/*.cpp src/*.c)
 file(GLOB_RECURSE HEADERS include/*.h include/*.hpp)
 
 add_executable(OpenGLProject ${SOURCES} ${HEADERS})

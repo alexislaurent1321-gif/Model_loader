@@ -12,7 +12,7 @@ int main(){
     SCOPE::UI_init(context);    // initialization of IMGUI
 
     // Shaders loading
-    SCOPE::Shader model_shader("libs/SCOPE/resources/shaders/default_lights.vert", "libs/SCOPE/resources/shaders/default_lights.frag");
+    SCOPE::Shader model_shader("libs/SCOPE/resources/shaders/default.vert", "libs/SCOPE/resources/shaders/default.frag");
 
     // Model loading
     SCOPE::Model model("models/backpack2/scene.gltf");
