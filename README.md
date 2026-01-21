@@ -15,3 +15,12 @@ Warning: this model, like other gltf, is on a 1/100 scale. Do not hesitate to ch
 # Dependencies and installation
 After cloning the repo, add it with the command `git clone --recurse-submodules https://github.com/alexislaurent1321-gif/SCOPE.git`. 
 
+
+# Upcoming improvements:
+- loading non-textured models (handling of materials)
+- loading multiple models
+- loading models directly from the user interface
+- correcting class structure (dependency between context and scene)
+- unifying and improving user interface management
+- bug fixes (especially with regard to the suppression of light in the scene)
+
