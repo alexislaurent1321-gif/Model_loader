@@ -2,6 +2,8 @@
 This is a demonstration of the [SCOPE](https://github.com/alexislaurent1321-gif/SCOPE) library, a self-made beginner 3D engine. It allows you to load a model, add lights to it, and navigate through the scene.
 It loads three imgui user interfaces: one for the model, one for the lights, and one for the camera. The project uses SCOPE as a submodule. 
 
+<img width="1055" height="596" alt="capture" src="https://github.com/user-attachments/assets/0c3785dd-c383-49bd-ba8f-a86d342fc2e4" />
+
 # Loading a model
 The engine loads with assimp, so most formats are therefore compatible.
 > [!WARNING]  
