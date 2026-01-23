@@ -1,11 +1,28 @@
 # Presentation
-This is a demonstration of the SCOPE library, a self-made beginner 3D engine. It allows you to load a model, add lights to it, and navigate through the scene.
+This is a demonstration of the [SCOPE](https://github.com/alexislaurent1321-gif/SCOPE) library, a self-made beginner 3D engine. It allows you to load a model, add lights to it, and navigate through the scene.
 It loads three imgui user interfaces: one for the model, one for the lights, and one for the camera. The project uses SCOPE as a submodule. 
 
+<img width="1055" height="596" alt="capture" src="https://github.com/user-attachments/assets/0c3785dd-c383-49bd-ba8f-a86d342fc2e4" />
+
 # Loading a model
-The engine loads with assimilation. Most formats are therefore compatible.
-Warning: loading a GLTF model may lead to 
+The engine loads with assimp, so most formats are therefore compatible.
+> [!WARNING]  
+The model needs to be textured. Materials are not yet supported.
+
+## Exemple
+The model loaded here is the [survival guitar backpack](https://sketchfab.com/3d-models/survival-guitar-backpack-799f8c4511f84fab8c3f12887f7e6b36) by Berk Gedik, seen in the [learnOpenGL](https://learnopengl.com/) tutorial.
+> [!WARNING]  
+This model, like other gltf, is on a 1/100 scale. Do not hesitate to change the size of the model in the main file if another model is loaded.
 
 # Dependencies and installation
 After cloning the repo, add it with the command `git clone --recurse-submodules https://github.com/alexislaurent1321-gif/SCOPE.git`. 
+
+
+# Upcoming improvements:
+- loading non-textured models (handling of materials)
+- loading multiple models
+- loading models directly from the user interface
+- correcting class structure (dependency between context and scene)
+- unifying and improving user interface management
+- bug fixes (especially with regard to the suppression of light in the scene)
 
